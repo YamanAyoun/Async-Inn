@@ -18,11 +18,11 @@ namespace Async_Inn_Management_System
                 .AddDbContext<AsyncInnDbContext>
                 (opions => opions.UseSqlServer(connString));
 
-            
 
             var app = builder.Build();
 
             app.MapControllers();
+
 
             app.MapGet("/", () => "Hello World!");
 
