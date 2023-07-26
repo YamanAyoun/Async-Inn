@@ -22,28 +22,18 @@ namespace Async_Inn_Management_System.Models.Services
         public async Task<List<HotelRoom>> GetHotelRooms(int hotelId)
         {
             var hotelrooms = await _context.HotelRooms
-                .Where(h => h.HotelID == hotelId)
-                .Include(h => h.Hotel)
-                .Include(r => r.Room)
-                .ThenInclude(a => a.RoomAmenities)
-                .ThenInclude(x => x.Amenity)
+                .Include(x => x.Room)
+                .ThenInclude(x => x.HotelRooms)
                 .ToListAsync();
             return hotelrooms;
         }
 
-        public async Task<HotelRoom> GetHotelRoom(int hotelId, int roomNumber)
+        public async Task<HotelRoom> GetHotelRoom(int hotelId, int roomId)
         {
-            var hotelRoom = await _context.HotelRooms
-                .Where(hr => hr.HotelID == hotelId && hr.RoomNumber == roomNumber)
-                .Include(x => x.Room)
-                .ThenInclude(h => h.HotelRooms)
-                .ThenInclude(x => x.Hotel)
-                .Include(x => x.Room)
-                .ThenInclude(a => a.RoomAmenities)
-                .ThenInclude(x => x.Amenity)
-                .FirstOrDefaultAsync(x => x.HotelID == hotelId && x.RoomNumber == roomNumber);
-
-            return hotelRoom;
+            return await _context.HotelRooms
+                .Include(x => x.Hotel)
+                .ThenInclude(x => x.HotelRooms)
+                .FirstOrDefaultAsync(x => x.HotelID == hotelId && x.RoomID == roomId);
         }
 
         public async Task<HotelRoom> UpdateHotelRoom(HotelRoom hotelRoom)
