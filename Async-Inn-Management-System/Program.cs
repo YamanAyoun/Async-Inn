@@ -29,7 +29,7 @@ namespace Async_Inn_Management_System
 
             app.MapControllers();
 
-            app.UseMvc();
+            
             app.MapGet("/", () => "Hello World!");
 
             app.Run();
