@@ -41,5 +41,23 @@ namespace Async_Inn_Management_System.Models.Services
             _context.Entry(room).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
+
+        public async Task AddAmenityToRoom(int roomId, int amenityId)
+        {
+            RoomAmenity roomAmenity = new RoomAmenity
+            {
+                RoomID = roomId,
+                AmenityID = amenityId
+            };
+            _context.Entry(roomAmenity).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveAmentityFromRoom(int roomId, int amenityId)
+        {
+            RoomAmenity roomAmenity = await _context.RoomAmenities.FindAsync(roomId, amenityId);
+            _context.Entry(roomAmenity).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
+        }
     }
 }
