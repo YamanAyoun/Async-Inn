@@ -15,6 +15,8 @@ namespace Async_Inn_Management_System.Data
         public DbSet<Room> rooms { get; set; } 
 
         public DbSet<Amenity> amenities { get; set; }
+        public DbSet<HotelRoom> HotelRooms { get; set; }
+        public DbSet<RoomAmenity> RoomAmenities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,6 +42,12 @@ namespace Async_Inn_Management_System.Data
                 new Amenity { Id = 2, Name = "Medium Amenity" },
                 new Amenity { Id = 3, Name = "Superior Amenity" }
             );
+
+            modelBuilder.Entity<RoomAmenity>().HasKey(
+                roomAmenities => new { roomAmenities.RoomID, roomAmenities.AmenityID });
+
+            modelBuilder.Entity<HotelRoom>().HasKey(
+                hotelRooms => new { hotelRooms.HotelID, hotelRooms.RoomID });
         }
     }
 }
