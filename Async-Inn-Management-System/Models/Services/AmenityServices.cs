@@ -1,4 +1,5 @@
 ﻿using Async_Inn_Management_System.Data;
+using Async_Inn_Management_System.Models.DTO;
 using Async_Inn_Management_System.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,29 +14,43 @@ namespace Async_Inn_Management_System.Models.Services
         {
             _context = context;
         }
-        public async Task<Amenity> Create(Amenity amenity)
+        public async Task<Amenity> Create(AmenityDTO amenity)
         {
-            _context.Entry(amenity).State = EntityState.Added;
+            Amenity newAmenity = new Amenity
+            {
+                Id = amenity.Id,
+                Name = amenity.Name,
+            };
+            _context.Entry(newAmenity).State = EntityState.Added;
             await _context.SaveChangesAsync();
-            return amenity;
+            return newAmenity;
         }
 
         public async Task Delete(int id)
         {
-            Amenity amenity = await GetAmenity(id);
+            Amenity amenity = await _context.amenities.FindAsync(id);
             _context.Entry(amenity).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Amenity>> GetAmenities()
+        public async Task<List<AmenityDTO>> GetAmenities()
         {
-            var amenities = await _context.amenities.ToListAsync();
-            return amenities;
+            return await _context.amenities.Select(x => new AmenityDTO
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToListAsync();
         }
 
-        public async Task<Amenity> GetAmenity(int id)
+        public async Task<AmenityDTO> GetAmenity(int id)
         {
-            Amenity amenity = await _context.amenities.FindAsync(id);
+            AmenityDTO amenity = await _context.amenities
+             .Select(amenity => new AmenityDTO
+             {
+                 Id = amenity.Id,
+                 Name = amenity.Name,
+                 }).FirstOrDefaultAsync(s => s.Id == id);
+
             return amenity;
         }
 
