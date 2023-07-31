@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Async_Inn_Management_System.Data;
 using Async_Inn_Management_System.Models;
 using Async_Inn_Management_System.Models.Interfaces;
+using Async_Inn_Management_System.Models.DTO;
 
 namespace Async_Inn_Management_System.Controllers
 {
@@ -24,7 +25,7 @@ namespace Async_Inn_Management_System.Controllers
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> Gethotels()
+        public async Task<ActionResult<IEnumerable<HotelDTO>>> Gethotels()
         {
             var hotels = await _hotel.GetHotels();
             return Ok(hotels);
@@ -32,7 +33,7 @@ namespace Async_Inn_Management_System.Controllers
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
             var hotel = await _hotel.GetHotel(id);
             return Ok(hotel);
