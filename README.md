@@ -1,6 +1,59 @@
 #  Async-Inn
 
 ## Name: Yaman Ayoun
+## Date: 31/7/2023.
+
+1. Add in Async Inn application by cleaning up input and outputs of your controllers to be DTOs.
+
+build DTOs stand for data transfer objects for this class:
+
+* Amenities
+* Rooms
+* HotelRooms
+* Hotels
+```
+    public class HotelDTO
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string StreetAddress { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Phone { get; set; }
+        public List<HotelRoomDTO> Rooms { get; set; }
+    }
+
+
+    public class HotelRoomDTO
+    {
+        public int HotelID { get; set; }
+        public int RoomNumber { get; set; }
+        public decimal Rate { get; set; }
+        public bool PetFriendly { get; set; }
+        public int RoomID { get; set; }
+        public RoomDTO Room { get; set; }
+    }
+
+    public class RoomDTO
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Layout { get; set; }
+        public List<AmenityDTO> Amenities { get; set; }
+    }
+
+    public class AmenityDTO
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+    }
+```
+
+2. Update the Interface for each class becouse we need use DTO Classes.
+
+3. Update services and controller API.
+
+## Name: Yaman Ayoun
 ## Date: 23/7/2023.
 
 ## In Lab 13:
