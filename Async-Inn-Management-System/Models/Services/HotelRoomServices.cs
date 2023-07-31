@@ -23,7 +23,7 @@ namespace Async_Inn_Management_System.Models.Services
         public async Task<List<HotelRoomDTO>> GetHotelRooms(int hotelId)
         {
             return await _context.HotelRooms
-                .Where(h => h.HotelID == hotelId)
+                
                 .Select(h => new HotelRoomDTO
                 {
                     HotelID = h.HotelID,
@@ -50,7 +50,6 @@ namespace Async_Inn_Management_System.Models.Services
         public async Task<HotelRoomDTO> GetHotelRoom(int hotelId, int roomId)
         {
             return await _context.HotelRooms
-                .Where(x => x.HotelID == hotelId & x.RoomNumber == roomId)
                 .Select(x => new HotelRoomDTO
                 {
                     HotelID = x.HotelID,
