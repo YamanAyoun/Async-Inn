@@ -3,6 +3,8 @@
 ## Name: Yaman Ayoun
 ## Date: 31/7/2023.
 
+## In Lab 14:
+
 1. Add in Async Inn application by cleaning up input and outputs of your controllers to be DTOs.
 
 build DTOs stand for data transfer objects for this class:
@@ -52,6 +54,17 @@ build DTOs stand for data transfer objects for this class:
 2. Update the Interface for each class becouse we need use DTO Classes.
 
 3. Update services and controller API.
+
+## Date: 26/7/2023.
+
+## In Lab 14:
+
+* GET all the rooms for a hotel: /api/Hotels/{hotelId}/Rooms
+* POST to add a room to a hotel: /api/Hotels/{hotelId}/Rooms
+* GET all room details for a specific room: /api/Hotels/{hotelId}/Rooms/{roomNumber}
+* PUT update the details of a specific room: /api/Hotels/{hotelId}/Rooms/{roomNumber}
+* DELETE a specific room from a hotel: /api/Hotels/{hotelId}/Rooms/{roomNumber}
+
 
 ## Name: Yaman Ayoun
 ## Date: 23/7/2023.
