@@ -35,7 +35,7 @@ namespace Async_Inn_Management_System.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
-            var room = await _room.GetRoom(id);
+            RoomDTO room = await _room.GetRoom(id);
             return Ok(room);
         }
 
@@ -59,9 +59,8 @@ namespace Async_Inn_Management_System.Controllers
         [HttpPost]
         public async Task<ActionResult<Room>> PostRoom(RoomDTO room)
         {
-            await _room.Create(room);
-
-            return CreatedAtAction("GetRoom", new { id = room.Id }, room);
+            Room newRoom = await _room.Create(room);
+            return Ok(newRoom);
         }
 
         // DELETE: api/Rooms/5
@@ -73,16 +72,16 @@ namespace Async_Inn_Management_System.Controllers
             return NoContent();
         }
 
-        // POST: api/Rooms/Amenities
-        [HttpPost("{roomId}/{amenityId}")]
+        // POST: api/Rooms/id/Amenity/id
+        [HttpPost("{roomId}/Amenity/{amenityId}")]
         public async Task<ActionResult<Room>> AddAmenityToRoom(int roomId, int amenityId)
         {
             await _room.AddAmenityToRoom(roomId, amenityId);
             return NoContent();
         }
 
-        // DELETE: api/Rooms/Amenities
-        [HttpDelete("{roomId}/{amenityId}")]
+        // DELETE: api/Rooms/1
+        [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveAmentityFromRoom(int roomId, int amenityId)
         {
             await _room.RemoveAmentityFromRoom(roomId, amenityId);

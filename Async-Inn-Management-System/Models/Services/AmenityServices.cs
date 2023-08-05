@@ -44,21 +44,26 @@ namespace Async_Inn_Management_System.Models.Services
 
         public async Task<AmenityDTO> GetAmenity(int id)
         {
-            AmenityDTO amenity = await _context.amenities
-             .Select(amenity => new AmenityDTO
-             {
-                 Id = amenity.Id,
-                 Name = amenity.Name,
-                 }).FirstOrDefaultAsync(s => s.Id == id);
-
+            var amenity = await _context.amenities
+                .Where(x => x.Id == id)
+                .Select(a => new AmenityDTO
+                {
+                    Id = a.Id,
+                    Name = a.Name
+                }).FirstAsync();
             return amenity;
         }
 
-        public async Task<Amenity> UpdateAmenity(int id, Amenity amenity)
+        public async Task<Amenity> UpdateAmenity(int id, AmenityDTO amenity)
         {
-            _context.Entry(amenity).State = EntityState.Modified;
+            Amenity modifiededAmenity = new Amenity
+            {
+                Id = amenity.Id,
+                Name = amenity.Name,
+            };
+            _context.Entry(modifiededAmenity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return amenity;
+            return modifiededAmenity;
         }
     }
 }

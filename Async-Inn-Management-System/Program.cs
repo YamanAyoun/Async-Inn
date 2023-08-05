@@ -14,6 +14,7 @@ namespace Async_Inn_Management_System
 
             builder.Services.AddControllers();
 
+
             string connString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services
@@ -22,6 +23,7 @@ namespace Async_Inn_Management_System
 
 
             builder.Services.AddTransient<IHotel, HotelServices>();
+            builder.Services.AddTransient<IHotelRoom, HotelRoomServices>();
             builder.Services.AddTransient<IRoom, RoomServices>();
             builder.Services.AddTransient<IAmenity, AmenityServices>();
 

@@ -23,9 +23,9 @@ namespace Async_Inn_Management_System.Controllers
             _hotelRoom = hotelRoom;
         }
 
-        // GET: api/HotelRooms
+        // GET: api/HotelRooms/1
         [HttpGet("{hotelId}")]
-        public async Task<ActionResult<IEnumerable<HotelRoomDTO>>> GetHotelRooms(int hotelId)
+        public async Task<ActionResult<Hotel>> GetHotelRooms(int hotelId)
         {
             var hotelRooms = await _hotelRoom.GetHotelRooms(hotelId);
             return Ok(hotelRooms);
@@ -39,9 +39,9 @@ namespace Async_Inn_Management_System.Controllers
             return Ok(hotelRoom);
         }
 
-        // PUT: api/HotelRooms/5
+        // PUT: api/HotelRooms/hotelId/Rooms/roomNumber
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{hotelId}/Rooms/{roomNumber}")]
         public async Task<IActionResult> PutHotelRoom(HotelRoom hotelRoom)
         {
             var modifiedHotelRoom = await _hotelRoom.UpdateHotelRoom(hotelRoom);
@@ -51,7 +51,7 @@ namespace Async_Inn_Management_System.Controllers
         // POST: api/HotelRooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost("{hotelId}/Rooms")]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(int hotelId, HotelRoom hotelRoom)
+        public async Task<ActionResult<HotelRoomDTO>> PostHotelRoom(int hotelId, HotelRoom hotelRoom)
         {
             await _hotelRoom.AddRoomToHotel(hotelId, hotelRoom);
             return NoContent();
@@ -59,12 +59,11 @@ namespace Async_Inn_Management_System.Controllers
 
         // DELETE: api/HotelRooms/5
         [HttpDelete("{hotelId}/Rooms/{roomId}")]
-        public async Task<IActionResult> DeleteHotelRoom(int hotelId, int roomId)
+        public async Task<IActionResult> DeleteHotelRoom(int hotelId, int roomNumber)
         {
-            await _hotelRoom.DeleteRoomFromHotel(hotelId, roomId);
+            await _hotelRoom.DeleteRoomFromHotel(hotelId, roomNumber);
             return NoContent();
         }
 
-        
     }
 }
