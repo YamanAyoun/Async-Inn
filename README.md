@@ -7,10 +7,9 @@
 
 ## Unit Testing:
 
-![Test AsyncInn](Asserts/AsyncInnTest.png)
+![Test AsyncInn](Async-Inn-Management-System/Asserts/AsyncInnTest.png)
 
-
-``    [Fact]
+     [Fact]
         public async Task CanAddAndDeleteRoomToHotel()
         {
             // Arrange
