@@ -22,8 +22,8 @@ namespace Async_Inn_Management_System.Models.Services
 
         public async Task<List<HotelRoomDTO>> GetHotelRooms(int hotelId)
         {
-            return await _context.HotelRooms
-                
+            var hotelrooms = await _context.HotelRooms
+                .Where(h => h.HotelID == hotelId)
                 .Select(h => new HotelRoomDTO
                 {
                     HotelID = h.HotelID,
@@ -44,33 +44,35 @@ namespace Async_Inn_Management_System.Models.Services
                     }
                 })
                 .ToListAsync();
-            
+            return hotelrooms;
+
         }
 
         public async Task<HotelRoomDTO> GetHotelRoom(int hotelId, int roomId)
         {
-            return await _context.HotelRooms
-                .Select(x => new HotelRoomDTO
+            var hotelRoom = await _context.HotelRooms
+                .Where(hr => hr.HotelID == hotelId && hr.RoomNumber == roomId)
+                .Select(hr => new HotelRoomDTO
                 {
-                    HotelID = x.HotelID,
-                    RoomNumber = x.RoomNumber,
-                    Rate = x.Rate,
-                    PetFriendly = x.PetFriendly,
-                    RoomID = x.RoomID,
+                    RoomID = hr.RoomID,
+                    HotelID = hr.HotelID,
+                    Rate = hr.Rate,
+                    RoomNumber = hr.RoomNumber,
                     Room = new RoomDTO
                     {
-
-                        Id = x.Room.Id,
-                        Name = x.Room.Name,
-                        Layout = x.Room.Layout,
-                        Amenities = x.Room.RoomAmenities.Select(x => new AmenityDTO
-                        {
-                            Id = x.AmenityID,
-                            Name = x.Amenity.Name
-                        }).ToList()
+                        Id = hr.Room.Id,
+                        Layout = hr.Room.Layout,
+                        Name = hr.Room.Name,
+                        Amenities = hr.Room.RoomAmenities
+                            .Select(a => new AmenityDTO
+                            {
+                                Id = a.RoomID,
+                                Name = a.Amenity.Name
+                            }).ToList()
                     }
+                }).FirstOrDefaultAsync(x => x.HotelID == hotelId && x.RoomNumber == roomId);
 
-                }).FirstOrDefaultAsync();
+            return hotelRoom;
         }
 
         public async Task<HotelRoom> UpdateHotelRoom(HotelRoom hotelRoom)

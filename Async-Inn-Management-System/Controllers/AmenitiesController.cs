@@ -27,22 +27,23 @@ namespace Async_Inn_Management_System.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AmenityDTO>>> Getamenities()
         {
-          
-            return await _amenity.GetAmenities();
+
+            var amenities = await _amenity.GetAmenities();
+            return Ok(amenities);
         }
 
         // GET: api/Amenities/5
         [HttpGet("{id}")]
         public async Task<ActionResult<AmenityDTO>> GetAmenity(int id)
         {
-            var amenity = await _amenity.GetAmenity(id);
-            return amenity;
+            AmenityDTO amenity = await _amenity.GetAmenity(id);
+            return Ok(amenity);
         }
 
         // PUT: api/Amenities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAmenity(int id, Amenity amenity)
+        public async Task<IActionResult> PutAmenity(int id, AmenityDTO amenity)
         {
             if (id != amenity.Id)
             {
@@ -59,9 +60,8 @@ namespace Async_Inn_Management_System.Controllers
         [HttpPost]
         public async Task<ActionResult<Amenity>> PostAmenity(AmenityDTO amenity)
         {
-            await _amenity.Create(amenity);
-
-            return CreatedAtAction("GetAmenity", new { id = amenity.Id }, amenity);
+            Amenity newAmenity = await _amenity.Create(amenity);
+            return Ok(newAmenity);
         }
 
         // DELETE: api/Amenities/5

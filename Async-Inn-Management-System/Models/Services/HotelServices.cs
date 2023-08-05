@@ -61,13 +61,13 @@ namespace Async_Inn_Management_System.Models.Services
                 StreetAddress = x.StreetAddress,
                 City = x.City,
                 State = x.State,
-                Phone = x.Phone,
+                
                 Rooms = x.HotelRooms.Select(x => new HotelRoomDTO
                 {
                     HotelID = x.HotelID,
                     RoomNumber = x.RoomNumber,
                     Rate = x.Rate,
-                    PetFriendly = x.PetFriendly,
+                    
                     RoomID = x.RoomID,
                     Room = new RoomDTO
                     {
@@ -83,17 +83,18 @@ namespace Async_Inn_Management_System.Models.Services
                 }).ToList()
             }).FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task Delete(int id)
+        {
+            Hotel hotel = await _context.hotels.FirstOrDefaultAsync(x => x.Id == id);
+            _context.Entry(hotel).State = EntityState.Deleted;
+            await _context.SaveChangesAsync();
+        }
         public async Task<Hotel> UpdateHotel(int id, Hotel hotel)
         {
             _context.Entry(hotel).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return hotel;
-        }
-        public async Task Delete(int id)
-        {
-            Hotel hotel = await _context.hotels.FindAsync(id);
-            _context.Entry(hotel).State = EntityState.Deleted;
-            await _context.SaveChangesAsync();
         }
     }
 }

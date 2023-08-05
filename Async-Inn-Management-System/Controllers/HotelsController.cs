@@ -60,10 +60,8 @@ namespace Async_Inn_Management_System.Controllers
         [HttpPost]
         public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
         {
-            await _hotel.Create(hotel);
-
-
-            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
+            Hotel newHotel = await _hotel.Create(hotel);
+            return Ok(newHotel);
         }
 
         // DELETE: api/Hotels/5

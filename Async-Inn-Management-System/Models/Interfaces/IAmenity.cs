@@ -14,7 +14,7 @@ namespace Async_Inn_Management_System.Models.Interfaces
         Task<AmenityDTO> GetAmenity(int id);
         
         // UPDATE
-        Task<Amenity> UpdateAmenity(int id, Amenity amenity);
+        Task<Amenity> UpdateAmenity(int id, AmenityDTO amenity);
         
         // DELET by ID
         Task Delete(int id);
