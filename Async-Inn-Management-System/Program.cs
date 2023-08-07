@@ -27,7 +27,27 @@ namespace Async_Inn_Management_System
             builder.Services.AddTransient<IRoom, RoomServices>();
             builder.Services.AddTransient<IAmenity, AmenityServices>();
 
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Async_Inn_Management_System",
+                    Version = "v1",
+                });
+            });
+
             var app = builder.Build();
+
+            app.UseSwagger(aptions =>
+            {
+                aptions.RouteTemplate = "/api/{documentName}/swagger.json";
+            });
+
+            app.UseSwaggerUI(aptions =>
+            {
+                aptions.SwaggerEndpoint("/api/v1/swagger.json", "Async_Inn_Management_System");
+                aptions.RoutePrefix = "docs";
+            });
 
             app.MapControllers();
 
