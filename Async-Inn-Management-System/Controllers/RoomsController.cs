@@ -81,7 +81,7 @@ namespace Async_Inn_Management_System.Controllers
         }
 
         // DELETE: api/Rooms/1
-        [HttpDelete("{id}")]
+        [HttpDelete("{roomId}/Amenity/{amenityId}")]
         public async Task<IActionResult> RemoveAmentityFromRoom(int roomId, int amenityId)
         {
             await _room.RemoveAmentityFromRoom(roomId, amenityId);
