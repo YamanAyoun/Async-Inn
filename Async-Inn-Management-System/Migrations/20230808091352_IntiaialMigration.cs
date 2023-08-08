@@ -7,7 +7,7 @@
 namespace Async_Inn_Management_System.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateAmenityTables : Migration
+    public partial class IntiaialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
