@@ -1,6 +1,34 @@
 #  Async-Inn
 
 ## Name: Yaman Ayoun
+## Date: 8/8/2023.
+
+## In Lab 18:
+
+# Identity
+User can add Register and Login to the AsyncInn system.
+
+To Add this features.
+
+Add new migration ,and new class ApplicationUser its inherited from IdentityUser. Then add new interface and new services to impleminte IUser, and we update the DbContext then add new DTO for Register and Login. Add new controller.
+
+This is the result Register and Login:
+
+Here we Add (Register) new user he have username, password, Email and phone number.<br/>
+![Test register](Async-Inn-Management-System/Asserts/register.png)<br/>
+After we Add, they have this specific string ID and Username.<br/>
+![Test register](Async-Inn-Management-System/Asserts/register2.png)<br/>
+
+Here we (Login) to user he have username, password.<br/>
+![Test login](Async-Inn-Management-System/Asserts/login.png)<br/>
+After we login we get this date string ID and Username.<br/>
+![Test login](Async-Inn-Management-System/Asserts/login2.png)<br/>
+
+
+
+#  Async-Inn
+
+## Name: Yaman Ayoun
 ## Date: 5/8/2023.
 
 ## In Lab 17:
