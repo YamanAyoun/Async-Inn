@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Async_Inn_Management_System.Migrations
 {
     [DbContext(typeof(AsyncInnDbContext))]
-    [Migration("20230726124758_UpdateHotelAndRoomTables")]
-    partial class UpdateHotelAndRoomTables
+    [Migration("20230808091352_IntiaialMigration")]
+    partial class IntiaialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
