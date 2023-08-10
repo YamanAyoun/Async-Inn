@@ -1,6 +1,23 @@
 #  Async-Inn
 
 ## Name: Yaman Ayoun
+
+## Date: 10/8/2023.
+
+## In Lab 19:
+### Use JWT for Async-Inn
+
+So we Add Authentication and Authorization to project:
+
+here we have this result when we use JSON web token:<br/>
+![JWT.io](Async-Inn-Management-System/Asserts/JWT.io.png)<br/>
+Here add admin:<br/>
+![JWT.io](Async-Inn-Management-System/Asserts/adminrole.png)<br/>
+Here add user:<br/>
+![JWT.io](Async-Inn-Management-System/Asserts/userrole.png)<br/>
+Here we have roles claim policy:<br/>
+![JWT.io](Async-Inn-Management-System/Asserts/rolesclaim.png)<br/>
+
 ## Date: 8/8/2023.
 
 ## In Lab 18:
@@ -23,6 +40,7 @@ Here we (Login) to user he have username, password.<br/>
 ![Test login](Async-Inn-Management-System/Asserts/login.png)<br/>
 After we login we get this date string ID and Username.<br/>
 ![Test login](Async-Inn-Management-System/Asserts/login2.png)<br/>
+
 
 
 

@@ -1,4 +1,5 @@
 ﻿using Async_Inn_Management_System.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,29 @@ namespace Async_Inn_Management_System.Data
         public DbSet<HotelRoom> HotelRooms { get; set; }
         public DbSet<RoomAmenity> RoomAmenities { get; set; }
 
+        int nextId = 1;
+        private void SeedRole(ModelBuilder modelBuilder, string roleName, params string[] permissions)
+        {
+            var role = new IdentityRole
+            {
+                Id = roleName.ToLower(),
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString()
+            };
+            modelBuilder.Entity<IdentityRole>().HasData(role);
+
+            var roleClaims = permissions.Select(permission =>
+              new IdentityRoleClaim<string>
+              {
+                  Id = nextId++,
+                  RoleId = role.Id,
+                  ClaimType = "permissions", 
+                  ClaimValue = permission
+              }).ToArray();
+
+            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(roleClaims);
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -43,6 +67,9 @@ namespace Async_Inn_Management_System.Data
                 new Amenity { Id = 2, Name = "Medium Amenity" },
                 new Amenity { Id = 3, Name = "Superior Amenity" }
             );
+
+            SeedRole(modelBuilder, "Admin", "create", "update", "delete");
+            SeedRole(modelBuilder, "User", "create", "update");
 
             modelBuilder.Entity<RoomAmenity>().HasKey(
                 roomAmenities => new { roomAmenities.RoomID, roomAmenities.AmenityID });

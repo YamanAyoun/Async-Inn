@@ -3,6 +3,7 @@ using Async_Inn_Management_System.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Security.Claims;
 
 namespace Async_Inn_Management_System.Models.Services
 {
@@ -11,9 +12,11 @@ namespace Async_Inn_Management_System.Models.Services
 
         private UserManager<ApplicationUser> userManager;
 
-        public IdentityUserService(UserManager<ApplicationUser> manager)
+        private JwtTokenService tokenService;
+        public IdentityUserService(UserManager<ApplicationUser> manager, JwtTokenService tokenService)
         {
             userManager = manager;
+            this.tokenService = tokenService;
         }
 
         public async Task<UserDto> Authenticate(string username, string password)
@@ -24,11 +27,30 @@ namespace Async_Inn_Management_System.Models.Services
 
             if (validPassword)
             {
-                return new UserDto { Id = user.Id, Username = user.UserName };
+                return
+                    new UserDto
+                    {
+                        Id = user.Id,
+                        Username = user.UserName,
+                        Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
+                    };
             }
 
             return null;
         }
+
+        public async Task<UserDto> GetUser(ClaimsPrincipal principal)
+        {
+            var user = await userManager.GetUserAsync(principal);
+
+            return new UserDto
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
+            };
+        }
+
 
         public async Task<UserDto> Register(RegisterUserDto registerUser, ModelStateDictionary modelState)
         {
@@ -44,10 +66,13 @@ namespace Async_Inn_Management_System.Models.Services
             
             if (result.Succeeded)
             {
+                userManager.AddToRolesAsync(user, registerUser.Roles);
                 return new UserDto()
                 {
                     Id = user.Id,
-                    Username = user.UserName
+                    Username = user.UserName,
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5)),
+                    Roles = await userManager.GetRolesAsync(user),
                 };
             }
 

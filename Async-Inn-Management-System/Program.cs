@@ -3,6 +3,7 @@ using Async_Inn_Management_System.Migrations;
 using Async_Inn_Management_System.Models;
 using Async_Inn_Management_System.Models.Interfaces;
 using Async_Inn_Management_System.Models.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,28 @@ namespace Async_Inn_Management_System
             builder.Services.AddTransient<IRoom, RoomServices>();
             builder.Services.AddTransient<IAmenity, AmenityServices>();
 
+            builder.Services.AddScoped<JwtTokenService>();
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = JwtTokenService.GetTokenValidationParameters(builder.Configuration);
+            
+            });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));
+                options.AddPolicy("update", policy => policy.RequireClaim("permissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete"));
+
+            });
+            builder.Services.AddAuthorization();
+
             builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
@@ -56,6 +79,10 @@ namespace Async_Inn_Management_System
                 aptions.SwaggerEndpoint("/api/v1/swagger.json", "Async_Inn_Management_System");
                 aptions.RoutePrefix = "docs";
             });
+
+            
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
 
